@@ -6,7 +6,17 @@ const getAll = (request, response)=>{
 
 const getById = (request, response)=>{
     const idRequerido = request.params.idRequerido
-    response.status(200).json(filmes.find(filme => filme.id == idRequerido))
+    let idFiltrado = filmes.find(filme => filme.id == idRequerido)
+
+    if(idFiltrado = underfind || idRequerido == ""){
+        response.status(404).json([{
+            "mensagem": "id não existente"
+        }])
+    }else{
+        response.status(200).json(idFiltrado)
+        
+    }
+    
 }
 
 const getByTitle = (request, response)=>{
@@ -16,9 +26,15 @@ const getByTitle = (request, response)=>{
     console.log(titulo)
     console.log(filmeFiltrado)
 
+    if(titulo == "" || filmeFiltrado == underfind){
+        response.status(400).json([{
+            "mensagem":" por favor , digite um título válido"
+        }])
 
-    response.status(200).send(filmeFiltrado)
-}
+    }else{
+        response.status(200).send(filmeFiltrado)
+    }
+ }
 
 module.exports = {
     getAll,
